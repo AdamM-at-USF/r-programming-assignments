@@ -26,3 +26,6 @@ and "someData" with "assignment2." This change allowed R to divide the sum of
 assignment2 with the length of assignment2 which is the calculation for the
 mean of assignment 2. The first attempt didn't work because "assignment" and
 "someData" are not objects within the dataset but "assignment2" is.
+---------------------------------------------------------------------
+Blog:
+https://adammargolisblog.blogspot.com/2026/09/lis-4370001-module-2-assignment.html
