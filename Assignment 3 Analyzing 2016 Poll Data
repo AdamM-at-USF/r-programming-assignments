@@ -1,0 +1,188 @@
+Blog:
+https://adammargolisblog.blogspot.com/2026/09/lis-4370001-assignment-3-analyzing-2016.html
+
+===========================================================================================
+
+R Code:
+# Load in the libraries
+library(tidyr)
+library(ggplot2)
+
+# Create the vectors
+Name <- c("Jeb", "Donald", "Ted", "Marco", "Carly", "Hillary", "Bernie")
+ABC_poll   <- c(  4,      62,      51,    21,      2,        14,       15)
+CBS_poll   <- c( 12,      75,      43,    19,      1,        21,       19)
+
+# Combine vectors into a data frame
+df_polls <- data.frame(Name, ABC_poll, CBS_poll)
+
+# Inspect the data frame with str() and head()
+str(df_polls)
+head(df_polls)
+
+# Calculate the mean, median, and range for the ABC poll
+mean(df_polls$ABC_poll)
+median(df_polls$ABC_poll)
+diff(range(df_polls$ABC_poll))
+      
+# Calculate the mean, median, and range for the CBS poll
+mean(df_polls$CBS_poll)
+median(df_polls$CBS_poll)
+diff(range(df_polls$CBS_poll))
+
+
+# Add a column for the difference between CBS and ABC
+df_polls$Diff <- df_polls$CBS_poll - df_polls$ABC_poll
+
+# Display final data frame
+df_polls
+
+# Make a bar chart(1) by first reshaping the data so both polls are in one column
+df_long <- pivot_longer(df_polls, cols = c(ABC_poll, CBS_poll))
+
+# Make a bar chart(2) by plotting the bars side-by-side
+dev.new(ggplot(df_long, aes(x = Name, y = value, fill = name)) +
+  geom_col(position = "dodge"))
+
+# Print bar chart
+(print(p))
+
+===========================================================================================
+
+R Output:
+> # Load in the libraries
+> library(tidyr)
+> library(ggplot2)
+> 
+> # Create the vectors
+> Name <- c("Jeb", "Donald", "Ted", "Marco", "Carly", "Hillary", "Bernie")
+> ABC_poll   <- c(  4,      62,      51,    21,      2,        14,       15)
+> CBS_poll   <- c( 12,      75,      43,    19,      1,        21,       19)
+> 
+> # Combine vectors into a data frame
+> df_polls <- data.frame(Name, ABC_poll, CBS_poll)
+> 
+> # Inspect the data frame with str() and head()
+> str(df_polls)
+'data.frame':	7 obs. of  3 variables:
+ $ Name    : chr  "Jeb" "Donald" "Ted" "Marco" ...
+ $ ABC_poll: num  4 62 51 21 2 14 15
+ $ CBS_poll: num  12 75 43 19 1 21 19
+> head(df_polls)
+     Name ABC_poll CBS_poll
+1     Jeb        4       12
+2  Donald       62       75
+3     Ted       51       43
+4   Marco       21       19
+5   Carly        2        1
+6 Hillary       14       21
+> 
+> # Calculate the mean, median, and range for the ABC poll
+> mean(df_polls$ABC_poll)
+[1] 24.14286
+> median(df_polls$ABC_poll)
+[1] 15
+> diff(range(df_polls$ABC_poll))
+[1] 60
+>       
+> # Calculate the mean, median, and range for the CBS poll
+> mean(df_polls$CBS_poll)
+[1] 27.14286
+> median(df_polls$CBS_poll)
+[1] 19
+> diff(range(df_polls$CBS_poll))
+[1] 74
+> 
+> 
+> # Add a column for the difference between CBS and ABC
+> df_polls$Diff <- df_polls$CBS_poll - df_polls$ABC_poll
+> 
+> # Display final data frame
+> df_polls
+     Name ABC_poll CBS_poll Diff
+1     Jeb        4       12    8
+2  Donald       62       75   13
+3     Ted       51       43   -8
+4   Marco       21       19   -2
+5   Carly        2        1   -1
+6 Hillary       14       21    7
+7  Bernie       15       19    4
+> 
+> # Make a bar chart(1) by first reshaping the data so both polls are in one column
+> df_long <- pivot_longer(df_polls, cols = c(ABC_poll, CBS_poll))
+> 
+> # Make a bar chart(2) by plotting the bars side-by-side
+> dev.new(ggplot(df_long, aes(x = Name, y = value, fill = name)) +
++   geom_col(position = "dodge"))
+NULL
+> 
+> # Print bar chart
+> (print(p))
+> # Load in the libraries
+> library(tidyr)
+> library(ggplot2)
+> 
+> # Create the vectors
+> Name <- c("Jeb", "Donald", "Ted", "Marco", "Carly", "Hillary", "Bernie")
+> ABC_poll   <- c(  4,      62,      51,    21,      2,        14,       15)
+> CBS_poll   <- c( 12,      75,      43,    19,      1,        21,       19)
+> 
+> # Combine vectors into a data frame
+> df_polls <- data.frame(Name, ABC_poll, CBS_poll)
+> 
+> # Inspect the data frame with str() and head()
+> str(df_polls)
+'data.frame':	7 obs. of  3 variables:
+ $ Name    : chr  "Jeb" "Donald" "Ted" "Marco" ...
+ $ ABC_poll: num  4 62 51 21 2 14 15
+ $ CBS_poll: num  12 75 43 19 1 21 19
+> head(df_polls)
+     Name ABC_poll CBS_poll
+1     Jeb        4       12
+2  Donald       62       75
+3     Ted       51       43
+4   Marco       21       19
+5   Carly        2        1
+6 Hillary       14       21
+> 
+> # Calculate the mean, median, and range for the ABC poll
+> mean(df_polls$ABC_poll)
+[1] 24.14286
+> median(df_polls$ABC_poll)
+[1] 15
+> diff(range(df_polls$ABC_poll))
+[1] 60
+>       
+> # Calculate the mean, median, and range for the CBS poll
+> mean(df_polls$CBS_poll)
+[1] 27.14286
+> median(df_polls$CBS_poll)
+[1] 19
+> diff(range(df_polls$CBS_poll))
+[1] 74
+> 
+> 
+> # Add a column for the difference between CBS and ABC
+> df_polls$Diff <- df_polls$CBS_poll - df_polls$ABC_poll
+> 
+> # Display final data frame
+> df_polls
+     Name ABC_poll CBS_poll Diff
+1     Jeb        4       12    8
+2  Donald       62       75   13
+3     Ted       51       43   -8
+4   Marco       21       19   -2
+5   Carly        2        1   -1
+6 Hillary       14       21    7
+7  Bernie       15       19    4
+> 
+> # Make a bar chart(1) by first reshaping the data so both polls are in one column
+> df_long <- pivot_longer(df_polls, cols = c(ABC_poll, CBS_poll))
+> 
+> # Make a bar chart(2) by plotting the bars side-by-side
+> dev.new(ggplot(df_long, aes(x = Name, y = value, fill = name)) +
++   geom_col(position = "dodge"))
+NULL
+> 
+> # Print bar chart
+> (print(p))
