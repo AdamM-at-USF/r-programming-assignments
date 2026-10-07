@@ -1,0 +1,78 @@
+# Assignment 7: Exploring R's Object-Oriented Systems (S3 & S4)
+# Adam Margolis
+# ==============================================================================
+# ==============================================================================
+
+# --- Task 1: Choose or Download Data ---
+# Load built-in dataset
+data("mtcars")
+
+# Display the first few rows
+head(mtcars)
+
+# Display the structure of the dataset
+str(mtcars)
+
+# ==============================================================================
+
+# --- Task 2: Test Generic Functions ---
+# Apply base functions (Print, Summary, and Plot) to the mtcars data frame (which is an S3 object)
+print(mtcars)
+summary(mtcars)
+plot(mtcars$mpg, mtcars$hp, xlab = "Miles Per Gallon", ylab = "Horsepower")
+
+# Example of generic dispatch behavior:
+# If we pass a non-standard list object to summary() or plot()
+custom_list <- list(a = 1:5, b = "test")
+
+# summary() works because a default method (summary.default) exists
+summary(custom_list)
+
+# However, applying a domain-specific generics like mean() directly to a full data frame: 
+# mean(mtcars) Triggers a warning/error in R.
+# This is because generic functions rely on method dispatch. So, if no specific method 
+# (e.g., mean.data.frame) exists for a given class, R falls back to the default method,
+# which may fail if the underlying data structure isn't compatible.
+
+# ==============================================================================
+
+# --- Task 3: Explore S3 vs. S4 ---
+
+# 1. S3 Object Example & Generic Dispatch
+s3_obj <- list(name = "Myself", age = 29, GPA = 3.5)
+class(s3_obj) <- "student_s3"
+
+# Define a generic print method for student_s3
+print.student_s3 <- function(x, ...) {
+  cat("S3 Student Profile:\n")
+  cat("  Name:", x$name, "\n")
+  cat("  Age :", x$age, "\n")
+  cat("  GPA :", x$GPA, "\n")
+}
+
+# Test S3 generic dispatch
+print(s3_obj)
+
+
+# 2. S4 Class & Object Example & Generic Dispatch
+setClass(
+  Class = "student_s4",
+  slots = c(
+    name = "character",
+    age = "numeric",
+    GPA = "numeric"
+  )
+)
+
+s4_obj <- new("student_s4", name = "Myself", age = 29, GPA = 3.5)
+
+# Define a generic show/print method for student_s4
+setMethod("show", signature = "student_s4", function(object) {
+  cat("S4 Student Profile:\n")
+  cat("  Name:", object@name, "\n")
+  cat("  Age :", object@age, "\n")
+  cat("  GPA :", object@GPA, "\n")
+})
+
+# Test S4 generic dispatch
+s4_obj
