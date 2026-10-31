@@ -1,0 +1,63 @@
+# ==============================================================================
+# LIS 4370 - Assignment 10: Building Your Own R Package (Friedman)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Package Initialization & Build Commands
+# ------------------------------------------------------------------------------
+library(devtools)
+
+# 1. Create the R package directory structure
+create("Friedman")
+
+# 2. Set working directory to package root
+setwd("Friedman")
+
+# 3. Overwrite the DESCRIPTION file
+description_content <- 'Package: Friedman
+Title: Tools for Nonparametric Statistical Analysis and Data Mining
+Version: 0.0.0.9000
+Authors@R: person("Adam", "Margolis", email = "adammargolis@usf.edu", role = c("aut", "cre"))
+Description: Provides simple utility functions for running non-parametric statistical tests, calculating rank-based metrics, and preparing data pipelines for predictive analysis.
+Depends: R (>= 3.1.2)
+Imports: 
+    ggplot2,
+    dplyr
+License: CC0
+LazyData: true
+URL: https://github.com/AdamM-at-USF/r-programming-assignments/Friedman
+BugReports: https://github.com/AdamM-at-USF/r-programming-assignments/Friedman/issues
+'
+
+writeLines(description_content, con = "DESCRIPTION")
+
+# 4. Check for errors/warnings and build package bundle
+check()
+build()
+
+# ------------------------------------------------------------------------------
+# Blog Post
+# ------------------------------------------------------------------------------
+#' ---
+#' title: "R Package Proposal: Friedman"
+#' author: "Adam Margolis"
+#' date: "`r Sys.Date()`"
+#' output: html_document
+#' ---
+#' 
+#' ### Package Purpose and Scope
+#' The `Friedman` package streamlines non-parametric statistical analysis.
+#' 
+#' ### Key Functions Planned
+#' - `run_friedman_test(data, formula)`: Executes non-parametric repeated-measures comparisons and outputs summary tables with effect sizes.
+#' - `plot_rank_distribution(data, var)`: Generates `ggplot2` visualizations showing rank distributions across categorical groups.
+#' - `clean_rank_data(df)`: Utilizes `dplyr` routines to handle missing values and compute standardized fractional ranks across numeric features.
+#' 
+#' ### DESCRIPTION Metadata Configuration
+#' - **Depends:** Set strictly to `R (>= 3.1.2)` to ensure core language compatibility.
+#' - **Imports:** Includes `ggplot2` and `dplyr` to declare external plotting and data-manipulation dependencies.
+#' - **License:** `CC0` selected for dedicated public-domain utility.
+#' - **Authors@R:** Specifies maintainer role (`cre`) and authorship (`aut`) contact metadata.
+#' 
+#' ### Blog Summary & Discussion
+#' Developing a custom R package requires structured metadata to ensure seamless build automation and dependency resolution across R environments. The `Friedman` package scaffold establishes a clean foundation by explicitly defining imported packages (`ggplot2`, `dplyr`) while enforcing minimal language constraints through `Depends`. Setting up standard Git source control alongside complete `DESCRIPTION` fields enables straightforward collaboration, reproducible checking, and transparent open-source distribution.
