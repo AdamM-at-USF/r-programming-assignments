@@ -1,0 +1,44 @@
+---
+title: "My R Markdown Primer"
+author: "Adam Margolis"
+date: "2026-11-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+**R Markdown** is an authoring framework for data science that weaves together narrative text and executable R code into a single reproducible document. Using simple plain-text formatting, it can be compiled ("knitted") into polished HTML, PDF, or Word reports.
+
+## Narrative and Mathematics
+
+By combining prose with statistical notation, R Markdown keeps analytical explanations directly tied to underlying formulas. For example, a simple linear relationship can be written inline as $\alpha + \beta = \gamma$, or expressed as a standalone regression model:
+
+$$Y = \beta_0 + \beta_1 X + \epsilon$$
+
+## Data Analysis and Visualization
+
+First, we load the built-in `mtcars` dataset and inspect its summary statistics.
+
+```{r summary_stats}
+data(mtcars)
+summary(mtcars[, c("mpg", "hp", "wt")])
+```
+
+Next, we generate a scatter plot showing the relationship between vehicle weight and fuel efficiency.
+
+```{r plot_mpg, fig.width=6, fig.height=4}
+plot(mtcars$wt, mtcars$mpg,
+     main = "Fuel Efficiency vs. Vehicle Weight",
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles Per Gallon (MPG)",
+     pch = 19, col = "steelblue")
+abline(lm(mpg ~ wt, data = mtcars), col = "darkred", lwd = 2)
+```
+
+## Reflection
+
+Using R Markdown is significantly more efficient and less error-prone than writing plain static reports. Instead of manually copying numbers and charts between RStudio and a word processor, knitting automatically updates all outputs whenever the data or code changes.
